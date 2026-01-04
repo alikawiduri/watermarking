@@ -96,13 +96,32 @@ function attacked_img = horizontal_flip(img,col)
 attacked_img = flip(img, col);
 end
 %5
-function attacked_img = random_cropping(img,persen)
-crop_size = floor(size(img) * persen/100);
-x = randi([1, size(img, 1) - crop_size(1)]);
-y = randi([1, size(img, 2) - crop_size(2)]);
-attacked_img = img(x:x+crop_size(1)-1, y:y+crop_size(2)-1);
-attacked_img = imresize(attacked_img, size(img));
+function attacked_img = random_cropping(img, persen)
+
+% --- pastikan ukuran target hanya [H W]
+target_size = size(img);
+target_size = target_size(1:2);
+
+% --- hitung ukuran crop
+crop_size = floor(target_size * persen/100);
+
+% --- safety
+crop_size = max(crop_size, [1 1]);
+
+x = randi([1, target_size(1) - crop_size(1) + 1]);
+y = randi([1, target_size(2) - crop_size(2) + 1]);
+
+if ndims(img) == 3
+    cropped = img(x:x+crop_size(1)-1, y:y+crop_size(2)-1, :);
+else
+    cropped = img(x:x+crop_size(1)-1, y:y+crop_size(2)-1);
 end
+
+% --- resize KEMBALI ke ukuran asli (H W)
+attacked_img = imresize(cropped, target_size);
+
+end
+
 %6
 function attacked_img = uniform_scaling(img,scale)
 % scale = 0.9; % Scaling factor

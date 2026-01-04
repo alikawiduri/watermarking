@@ -1,0 +1,16 @@
+PSNR Watermarked = 50.35 dB
+
+=== JPEG Compression QF = 60 ===
+No ML     | BER = 0.2188 | NC = 0.3021
+SVM     | BER = 0.1592 | NC = 0.2755
+RF      | BER = 0.0889 | NC = 0.5822
+KNN     | BER = 0.1543 | NC = 0.3349
+TREE    | BER = 0.1377 | NC = 0.4625
+LOGREG  | BER = 0.1172 | NC = 0.0959
+NN      | BER = 0.1670 | NC = 0.2970
+ADA     | BER = 0.1875 | NC = 0.2940
+NB      | BER = 0.1045 | NC = -0.0233
+RF+PP    | BER = 0.0361 | NC = 0.7854
+
+All results saved in folder: results/airplane/results_
+>> 
