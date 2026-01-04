@@ -1,0 +1,16 @@
+PSNR Watermarked = 50.45 dB
+
+=== JPEG Compression QF = 60 ===
+No ML     | BER = 0.5664 | NC = 0.0082
+SVM     | BER = 0.8047 | NC = 0.0097
+RF      | BER = 0.8174 | NC = -0.0204
+KNN     | BER = 0.8154 | NC = -0.0343
+TREE    | BER = 0.8047 | NC = -0.0065
+LOGREG  | BER = 0.8125 | NC = -0.0149
+NN      | BER = 0.8154 | NC = -0.0099
+ADA     | BER = 0.8135 | NC = -0.0240
+NB      | BER = 0.7393 | NC = -0.0598
+RF+PP    | BER = 0.8750 | NC = 0.0537
+
+All results saved in folder: results
+>> 

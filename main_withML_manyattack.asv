@@ -1,0 +1,67 @@
+clc; clear; close all;
+rng(1);
+
+%% ================= LOAD TRAINED MODELS =================
+load bit_corrector_models   % models, mu, sg
+
+%% ================= PARAMETER =================
+resolusihost = 256;
+blok  = 8;
+L     = blok^2;
+
+alfa   = 1;
+alfass = 25;
+
+Ldek = 1;
+sub  = 2;
+
+%% ================= LOAD HOST =================
+host = imread('host_image/cameraman.jpg');
+host = im2gray(host);
+host = double(imresize(host,[resolusihost resolusihost]));
+host1d = reshape(host,[],1);
+
+%% ================= LOAD WATERMARK =================
+logo = imread('watermark/logo tel-u.png');
+logo = rgb2gray(imresize(logo,[resolusihost/blok resolusihost/blok]));
+logobw = imbinarize(logo);
+
+wm = double(logobw(:));
+wm(wm==0) = -1;   % {-1,+1}
+
+%% ================= PN SEQUENCE =================
+pn = 2*randi([0 1],blok,blok)-1;
+pn_block = pn(1:2,1:2);
+
+%% ================= EMBEDDING =================
+xw = zeros(size(host1d));
+So = cell(length(wm),1);
+
+for i = 1:length(wm)
+
+    seg = alfa * host1d(L*i-L+1:L*i);
+
+    Sw = swt(seg,Ldek,'haar');
+    sdst = dst(Sw(sub,:));
+    Sdct = dct(sdst);
+    Sdct2 = reshape(Sdct,[blok blok]);
+
+    [U,S,V] = svd(Sdct2);
+    So{i} = S;
+
+    % Spread Spectrum on dominant singular
+    Semb = S;
+    Semb(1:2,1:2) = S(1:2,1:2) + alfass * wm(i) * pn_block;
+
+    Srec = U*Semb*V';
+    Sw(sub,:) = idst(idct(reshape(Srec,[],1)));
+    xw(L*i-L+1:L*i) = iswt(Sw,'haar');
+end
+
+xwr = uint8(min(max(reshape(xw,size(host)),0),255));
+
+%% ================= PSNR =================
+mse = mean((double(host(:)) - double(xwr(:))).^2);
+PSNR = 10*log10(255^2/mse);
+fprintf('PSNR Watermarked = %.2f dB\n',PSNR);
+
