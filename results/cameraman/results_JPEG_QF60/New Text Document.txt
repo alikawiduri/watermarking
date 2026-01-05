@@ -1,0 +1,16 @@
+PSNR Watermarked = 50.45 dB
+
+=== JPEG Compression QF = 60 ===
+No ML     | BER = 0.1738 | NC = 0.4423
+SVM     | BER = 0.1357 | NC = 0.4710
+RF      | BER = 0.0762 | NC = 0.6608
+KNN     | BER = 0.1475 | NC = 0.4498
+TREE    | BER = 0.1279 | NC = 0.5049
+LOGREG  | BER = 0.0801 | NC = 0.4875
+NN      | BER = 0.1270 | NC = 0.4786
+ADA     | BER = 0.1377 | NC = 0.4231
+NB      | BER = 0.0967 | NC = 0.2201
+RF+PP    | BER = 0.0225 | NC = 0.8697
+
+All results saved in folder: results/cameraman/results_
+>> 

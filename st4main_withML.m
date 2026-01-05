@@ -16,7 +16,7 @@ Ldek = 1;
 sub  = 2;
 
 %% ================= LOAD HOST =================
-host = imread('host_image/airplane.png');
+host = imread('host_image/cameraman.jpg');
 host = im2gray(host);
 host = double(imresize(host,[resolusihost resolusihost]));
 host1d = reshape(host,[],1);
@@ -66,14 +66,14 @@ PSNR = 10*log10(255^2/mse);
 fprintf('PSNR Watermarked = %.2f dB\n',PSNR);
 
 %% ================= SINGLE ATTACK =================
-%jenisserangan = [2 60];   % JPEG_QF60
+jenisserangan = [2 60];   % JPEG_QF60
 %jenisserangan = [2 40];   % JPEG_QF40
 %jenisserangan = [3 5];   % Rotation_5deg
 %jenisserangan = [3 -5];   % Rotation_-5deg
 %jenisserangan = [6 0.8];   % Scaling_08
 %jenisserangan = [6 1.2];   % Scaling_12
 %jenisserangan = [17 0.01];   % Noise_001
-jenisserangan = [17 0.02];   % Noise_002
+%jenisserangan = [17 0.02];   % Noise_002
 attacked_img = stirmark_imagebenchmark(xwr, jenisserangan);
 xwn = reshape(double(attacked_img),[],1);
 
@@ -194,7 +194,7 @@ legend({'Tanpa ML','Dengan ML'},'Location','northwest')
 ylim([0 max(BER_plot(:))*1.25])
 
 %% ================= SAVE RESULTS =================
-outdir = 'results/airplane/results_';
+outdir = 'results/cameraman/results_';
 if ~exist(outdir,'dir'), mkdir(outdir); end
 
 saveas(fig1, fullfile(outdir,'watermark_comparison.png'));

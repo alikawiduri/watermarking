@@ -13,7 +13,7 @@ Ldek = 1;
 sub  = 2;          % SWT subband
 
 %% ================= LOAD HOST =================
-host = imread('host_image/airplane.png');
+host = imread('host_image/cameraman.jpg');
 host = im2gray(host);
 host = double(imresize(host,[resolusihost resolusihost]));
 host1d = reshape(host,[],1);
